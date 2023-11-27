@@ -1,0 +1,15 @@
+{% extends "app1/layout.html" %}chatgpt
+
+
+
+{% block body %}
+
+    hh
+    <ul>
+        {% for customer in customers_list %}
+            <li> {{customer.first_name}}</li>
+        {% endfor %}
+    </ul>  
+
+
+{% endblock %}

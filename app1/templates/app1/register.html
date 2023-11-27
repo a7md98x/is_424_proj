@@ -1,0 +1,15 @@
+{% extends "app1/layout.html" %}chatgpt
+
+
+
+{% block body %}
+    <h2> register </h2>
+            
+    <form method="post" action="{% url '' %}">
+        {% csrf_token %}
+            {{ customer_form.as_p }}
+        <button type="submit">Add Student</button>
+    </form>
+
+
+{% endblock %}

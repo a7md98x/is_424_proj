@@ -1,0 +1,15 @@
+{% extends "app1/layout.html" %}
+
+
+
+{% block body %}
+
+          
+    <ul>
+        {% for book in book_list %}
+            <li>{{ book.bname }}</li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
