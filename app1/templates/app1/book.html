@@ -4,12 +4,26 @@
 
 {% block body %}
 
-          
+          welcome
     <ul>
         {% for book in book_list %}
             <li>{{ book.bname }}</li>
         {% endfor %}
+
+        {% for customer in customers_list %}
+            <li> {{customer.first_name}}</li>
+            <li> {{customer.user}}</li>
+            <li> {{customer.user.id}}</li>
+        {% endfor %}
     </ul>
+
+    <a href="{% url 'app1:logout' %}" class="button">Logout</a>
+
+    <a href="{% url 'app1:add_customer' %}" class="button">add customer</a>
+
+    <a href="{% url 'app1:add_book' %}" class="button">add book</a>
+
+
 
 
 {% endblock %}

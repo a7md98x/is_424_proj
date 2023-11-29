@@ -1,0 +1,25 @@
+{% extends "app1/layout.html" %}
+
+
+
+{% block body %}
+
+          welcome
+    <ul>
+        {% for book in book_list %}
+            <li>{{ book.bname }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Book</h2>
+    <form method="post" action="{% url 'app1:add_book' %}">
+        {% csrf_token %}
+        {{ book_form }}
+        <button type="submit">Add Book</button>
+    </form>
+    <a href="{% url 'app1:books' %}" class="button">Books </a>
+    
+    <a href="{% url 'app1:logout' %}" class="button">Logout</a>
+
+
+{% endblock %}

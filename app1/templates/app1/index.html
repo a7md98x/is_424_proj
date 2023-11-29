@@ -1,8 +1,14 @@
-{% extends "app1/layout.html" %}chatgpt
+{% extends "app1/layout.html" %}
 
 
 
 {% block body %}
+    <ul>
+        {% for customer in customer_list %}
+            <li> <a href = {% url 'details' customer.id %} >customer {{customer.id}} </a> - {{ customer.first_name}}  {{customer.last_name}}</li>
+        {% endfor %}
+    </ul>  
+
 
 
 

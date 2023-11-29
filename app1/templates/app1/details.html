@@ -1,0 +1,43 @@
+{% extends "app1/layout.html" %}
+
+
+
+{% block body %}
+
+   
+<ul>
+    <li>first name: {{ customer.first_name }}</li>
+    <li>last name: {{ customer.last_name }}</li>
+    <li>student id : {{customer.id}} </li>
+    <li>email : {{customer.email}} </li>
+</ul>
+
+<section>
+    <form method="post">
+        {% csrf_token %}
+        <select name="books">
+            {% for c in available_courses %}
+                <option value="{{ c.id }}">{{ c.cname }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Add book</button>
+    </form>
+
+    </form>
+    <ul>
+        {% for c in customers.book.all %}
+            <li>{{ b.bname }}</li>
+        {% endfor %}
+    </ul>
+</section>
+
+<a href="{% url 'app1:add_book' %}" class="button">ADD book </a>
+
+<a href="{% url 'app1:login' %}" class="button">login  </a>
+
+<a href="{% url 'app1:logout' %}" class="button">Logout</a>
+
+
+
+
+{% endblock %}
