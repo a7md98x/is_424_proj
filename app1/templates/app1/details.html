@@ -1,43 +1,70 @@
 {% extends "app1/layout.html" %}
 
-
-
 {% block body %}
 
-   
+         
+    <ul>
+        <li>first name: {{ customer.first_name }}</li>
+        <li>last name: {{ customer.last_name }}</li>
+        <li>student id : {{ customer.id }} </li>
+        <li>email : {{ customer.email }} </li>
+    </ul>
+    <ul>
+        <li>book name: {{ book.bname }}</li>
+        <li>Author: {{ book.author }}</li>
+        <li>Pages : {{ book.pages }} </li>
+        <li>Language : {{ book.language }} </li>
+    </ul>
+
+
+
+
+
+    <section>
+        <form method="post">
+            {% csrf_token %}
+            <label for="books">Select a book:</label>
+            <select name="book" id="books">
+                {% for b in available_books %}
+                    <option value="{{ b.id }}">{{ b.bname }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Add book</button>
+        </form>
+
+        <ul>
+            {% for b in customer.books.all %}
+                <li>{{ b.bname }}</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+
+
+
+
+<!-- app1/details.html -->
+
+<h1>{{ customer.name }} Details</h1>
+<!-- Display customer details -->
+
+<h2>Available Books</h2>
 <ul>
-    <li>first name: {{ customer.first_name }}</li>
-    <li>last name: {{ customer.last_name }}</li>
-    <li>student id : {{customer.id}} </li>
-    <li>email : {{customer.email}} </li>
+  {% for book in available_books %}
+    <li>
+      <a href="{% url 'app1:book_details' book.id %}">{{ book.bname }}</a>
+      <form method="post" action="{% url 'app1:details' username=customer.user.username %}">
+        {% csrf_token %}
+        <input type="hidden" name="book" value="{{ book.id }}">
+        <button type="submit">Add Book</button>
+      </form>
+    </li>
+  {% endfor %}
 </ul>
 
-<section>
-    <form method="post">
-        {% csrf_token %}
-        <select name="books">
-            {% for c in available_courses %}
-                <option value="{{ c.id }}">{{ c.cname }}</option>
-            {% endfor %}
-        </select>
-        <button type="submit">Add book</button>
-    </form>
-
-    </form>
-    <ul>
-        {% for c in customers.book.all %}
-            <li>{{ b.bname }}</li>
-        {% endfor %}
-    </ul>
-</section>
-
-<a href="{% url 'app1:add_book' %}" class="button">ADD book </a>
-
-<a href="{% url 'app1:login' %}" class="button">login  </a>
-
-<a href="{% url 'app1:logout' %}" class="button">Logout</a>
-
-
+    <a href="{% url 'app1:add_book' %}" class="button">ADD book </a>
+    <a href="{% url 'app1:login' %}" class="button">login  </a>
+    <a href="{% url 'app1:logout' %}" class="button">Logout</a>
 
 
 {% endblock %}

@@ -7,13 +7,15 @@
     hh
     <ul>
         {% for customer in customers_list %}
-            <li> {{customer.first_name}}</li>
-            <li> {{customer.user}}</li>
-            <li> {{customer.user.id}}</li>
+            <li> {{customer.first_name}} {{customer.user}} {{customer.user.id}}</li>
         {% endfor %}
     </ul>  
     <a href="{% url 'app1:logout' %}" class="button">Logout</a>
-
+    <ul>
+        {% for user in user_list %}
+            <li>{{user.last_name}}</li>
+        {% endfor %}
+    </ul>  
 
 
 {% endblock %}

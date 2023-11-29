@@ -1,13 +1,34 @@
 {% extends "app1/layout.html" %}
 
 {% block body %}
-ww
+
   <h2>Register</h2>
-  <form method="post">
+
+
+  {% if message %}
+    <div>{{ message }}</div>
+  {% endif %}
+
+  <form action="{% url 'app1:register' %}" method="post">
+    {% csrf_token %}
+    <input type="text" name="first_name" placeholder="First Name" >
+    <input type="text" name="last_name" placeholder="Last Name" >
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="submit", value="register">
+  </form>
+
+
+
+
+
+  {% comment %} <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
+
     <button type="submit">Register</button>
-  </form>
+  </form> {% endcomment %}
 
   <a href="{% url 'app1:login' %}" class="button">login</a>
 

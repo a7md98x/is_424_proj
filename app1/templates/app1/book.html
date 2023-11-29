@@ -5,17 +5,30 @@
 {% block body %}
 
           welcome
-    <ul>
+<h2>Available Books</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Language</th>
+        </tr>
+    </thead>
+    <tbody>
         {% for book in book_list %}
-            <li>{{ book.bname }}</li>
+            <tr>
+                <td>
+                    <a href="{% url 'app1:details' customer_id=request.user.id %}">{{ book.bname }}</a>
+                </td>                
+                <td>{{ book.author }}</td>
+                <td>{{ book.pages }}</td>
+                <td>{{ book.language }}</td>
+            </tr>
         {% endfor %}
-
-        {% for customer in customers_list %}
-            <li> {{customer.first_name}}</li>
-            <li> {{customer.user}}</li>
-            <li> {{customer.user.id}}</li>
-        {% endfor %}
-    </ul>
+    </tbody>
+</table>
+    
 
     <a href="{% url 'app1:logout' %}" class="button">Logout</a>
 

@@ -1,3 +1,4 @@
+from curses.ascii import US
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
@@ -7,6 +8,9 @@ from django.urls import reverse
 from django.contrib.auth import authenticate, login as auth_login,logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from itertools import chain
+
 
 
 
@@ -40,12 +44,42 @@ def login(request):
             
 
     return render(request, "app1/login.html")
-    
-def customer(request, cid):
+
+def register1(request):
+    if request.method == 'POST':  
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            first_name = request.POST.get("first_name")
+            last_name = request.POST.get("last_name")
+            email = request.POST.get("email")
+
+            print(f"Received username: {username}, password: {password} email: {email} fname:{first_name} lname :{last_name}")
+            user = User.objects.create_user(username, email, password)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.save()
+            
+            customer = customers.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                email=email,
+                user=user
+            )
+   
+
+    return render(request, "app1/register.html")
+            
+            
+            
+            
+            
+            
+def customer(request):
     customer_list = customers.objects.all()
+    user_list = User.objects.all()
     customer_form = CustomerForm()
     return render(request,"app1/customer.html",{
-        "customers_list": customer_list,"customer_form" :customer_form
+        "customers_list": customer_list,"customer_form" :customer_form,'user_list':user_list
     })
 
 
@@ -93,38 +127,52 @@ def add_books(request):
     book_list = book.objects.all()
     return render(request, 'app1/add_book.html', {'book_list': book_list, 'book_form': book_form})
       
-          
+
+def book_details(request, book_id):
+    book_obj = get_object_or_404(book, pk=book_id)
+
+    return render(request, 'app1/book_details.html', {'book':book_obj})
+      
           
             
-def register(request):
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
+# def register(request):
+#     if request.method == 'POST':
+#         form = UserCreationForm(request.POST)
+        
+#         if form.is_valid():
+#             form.save()
             
-            # Redirect to a success page or login page
-            return HttpResponseRedirect(reverse("app1:register"))
-    else:
-        form = UserCreationForm()
+#             # Redirect to a success page or login page
+#             return HttpResponseRedirect(reverse("app1:register"))
+#     else:
+#         form = UserCreationForm()
 
-    return render(request, "app1/register.html", {'form': form})
+#     return render(request, "app1/register.html", {'form': form})
 
 
 
-   
-def details(request, customer_id):
-    customer = get_object_or_404(customers, pk=customer_id)
+def details(request, username):
+    user = get_object_or_404(User, username=username)
+    customer = get_object_or_404(customers, user=user)
+ 
     customer_list = customers.objects.all()
+    user_list = User.objects.all()
 
-    available_books= book.objects.exclude(customers__in=[customer])
+    available_books = book.objects.exclude(customers=customer)
 
+    print(customer_list)
+    print(user_list)
     if request.method == 'POST':
-        book_id = request.POST['book']
-        book_to_add = book.objects.get(pk=book_id)
-        customer.books.add(book_to_add)
-        return redirect('app1:details', customer_id=customer_id)
+        book_id = request.POST.get('book')
 
-    return render(request, 'app1/details.html', {'customer': customer, 'customer_list': customer_list, 'available_books': available_books})
+        if book_id:
+            
+                book_to_add = book.objects.get(pk=book_id)
+                customer.books.add(book_to_add)
+                return redirect('app1:details', username=username)
+           
+
+    return render(request, 'app1/details.html', {'customer': customer, 'customer_list': customer_list, 'available_books': available_books,})
 
 
 
