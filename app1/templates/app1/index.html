@@ -3,9 +3,11 @@
 
 
 {% block body %}
+    {{user.username}}
+
     <ul>
-        {% for customer in customers_list %}
-            <li> <a href = {% url 'app1:details' customer.id %} >customer {{customer.id}} </a> - {{ customer.first_name}}  {{customer.last_name}}</li>
+        {% for user in user_list %}
+            <li> <a href = {% url 'app1:details' user.username %} >customer {{user.username}} </a> - {{user.email}}</li>
         {% endfor %}
     </ul>  
 

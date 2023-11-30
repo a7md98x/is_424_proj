@@ -9,15 +9,17 @@
     <li>Pages : {{ book.pages }} </li>
     <li>Language : {{ book.language }} </li>
 </ul>
-
-
-
-<h2>Add Book</h2>
-<form method="post" action="{% url 'app1:add_book' %}">
+{{ book.bname }}
+<form method="post" action="{% url 'app1:details' username=user.username %}">
     {% csrf_token %}
-    {{ book_form }}
-    <button type="submit">Add Book</button>
-</form>
+    <input type="hidden" name="book" value="{{ book.id }}">
+    <button type="submit">Add this Book</button>
+<br>
+<br>
+<a href="{% url 'app1:details' username=request.user.username %}">your info</a>
+
+<a href="{% url 'app1:add_book' %}" class="button">Add Book</a>
+
 <a href="{% url 'app1:books' %}" class="button">Books </a>
 
 <a href="{% url 'app1:logout' %}" class="button">Logout</a>

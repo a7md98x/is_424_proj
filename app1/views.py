@@ -21,8 +21,9 @@ def index (request):
     customer_form = CustomerForm()
 
     customer_list = customers.objects.all()
+    user_list = User.objects.all()
     return render(request,"app1/index.html",{
-        "customers_list": customer_list,"customer_form" :customer_form
+        "customers_list": customer_list,"customer_form" :customer_form,"user_list" :user_list
     })
 
 def login(request):
@@ -53,7 +54,6 @@ def register1(request):
             last_name = request.POST.get("last_name")
             email = request.POST.get("email")
 
-            print(f"Received username: {username}, password: {password} email: {email} fname:{first_name} lname :{last_name}")
             user = User.objects.create_user(username, email, password)
             user.first_name = first_name
             user.last_name = last_name
@@ -109,10 +109,11 @@ def logout_view(request):
 def books(request):
     book_list = book.objects.all()
     customer_list = customers.objects.all()
+    user_list= User.objects.all() 
 
     book_form = BookForm()
     return render(request,"app1/book.html",{
-        "book_list": book_list,"book_form" :book_form, "customers_list" : customer_list
+        "book_list": book_list,"book_form" :book_form, "customers_list" : customer_list,'user':user_list
     })
 
 
@@ -130,6 +131,7 @@ def add_books(request):
 
 def book_details(request, book_id):
     book_obj = get_object_or_404(book, pk=book_id)
+    # available_books = book.objects.exclude(customers=customer)
 
     return render(request, 'app1/book_details.html', {'book':book_obj})
       
@@ -152,7 +154,7 @@ def book_details(request, book_id):
 
 
 def details(request, username):
-    user = get_object_or_404(User, username=username)
+    user = User.objects.get(username=username)
     customer = get_object_or_404(customers, user=user)
  
     customer_list = customers.objects.all()
@@ -160,8 +162,7 @@ def details(request, username):
 
     available_books = book.objects.exclude(customers=customer)
 
-    print(customer_list)
-    print(user_list)
+  
     if request.method == 'POST':
         book_id = request.POST.get('book')
 
@@ -170,9 +171,10 @@ def details(request, username):
                 book_to_add = book.objects.get(pk=book_id)
                 customer.books.add(book_to_add)
                 return redirect('app1:details', username=username)
+
            
 
-    return render(request, 'app1/details.html', {'customer': customer, 'customer_list': customer_list, 'available_books': available_books,})
+    return render(request, 'app1/details.html', {'customer': customer, 'customer_list': user_list, 'available_books': available_books,"user":user,'book':None})
 
 
 
