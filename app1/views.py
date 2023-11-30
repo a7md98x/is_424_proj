@@ -1,4 +1,3 @@
-from curses.ascii import US
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import *
@@ -9,7 +8,9 @@ from django.contrib.auth import authenticate, login as auth_login,logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from itertools import chain
+from django.http import Http404
+
+
 
 
 
@@ -65,6 +66,7 @@ def register1(request):
                 email=email,
                 user=user
             )
+            return render(request, "app1/login.html")
    
 
     return render(request, "app1/register.html")
@@ -178,6 +180,18 @@ def details(request, username):
 
 
 
+def update_book(request, book_id):
+    print(f"book_id: {book_id}")
+    Book = get_object_or_404(book, pk=book_id)
+    print(f"Book: {Book}")
+    if request.method == 'POST':
+        form = BookUpdateForm(request.POST, instance=Book)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("app1:books")) 
+        else:
+             print(f"Form errors: {form.errors}")
+    else:
+        form = BookUpdateForm(instance=Book)
 
-
-
+    return render(request, 'app1/update_book.html', {'form': form, 'book': Book})

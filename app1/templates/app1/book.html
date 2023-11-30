@@ -6,7 +6,7 @@
         <thead>
             <tr>
                 <th>Book Name</th>
-
+                <th>Update</th>
             </tr>
         </thead>
         <tbody>
@@ -15,9 +15,10 @@
                 <td>
                     <a href="{% url 'app1:book_details' book.id %}">{{ book.bname }}</a>
                 </td>
-                 
-
-                </tr>
+                <td>
+                    <a href="{% url 'app1:update_book' book.id %}">Update Book Info</a>
+                </td>    
+            </tr>
             {% endfor %}
         </tbody>
     </table>
