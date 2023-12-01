@@ -1,52 +1,51 @@
 {% extends "app1/layout.html" %}
 
 {% block body %}
-{% if book.id %}
-    <a href="{% url 'app1:book_details' book_id=book.id %}">{{ book.bname }}</a>
-{% else %}
-    <!-- Handle the case where book.id is empty or not provided -->
-    <span>No Book ID Available</span>
-{% endif %}
+<div class="container mt-5">
+    {% if book.id %}
+        <a href="{% url 'app1:book_details' book_id=book.id %}" class="btn btn-primary">{{ book.bname }}</a>
+    {% else %}
+        <!-- Handle the case where book.id is empty or not provided -->
+        <span class="text-danger">No Book ID Available</span>
+    {% endif %}
 
     <h1>{{ user.username }} Details</h1>
-    <ul>
-        <li>First Name: {{ user.first_name }}</li>
-        <li>Last Name: {{ user.last_name }}</li>
-        <li>ID: {{ user.id }}</li>
-        <li>Email: {{ user.email }}</li>
+    <ul class="list-group">
+        <li class="list-group-item">First Name: {{ user.first_name }}</li>
+        <li class="list-group-item">Last Name: {{ user.last_name }}</li>
+        <li class="list-group-item">ID: {{ user.id }}</li>
+        <li class="list-group-item">Email: {{ user.email }}</li>
     </ul>
 
     <section>
-        <h2>Available Books</h2>
-      
-        <ul>
-     
+        <h2 class="mt-4">Available Books</h2>
+        <ul class="list-group">
             {% for book in available_books %}
-                <li>
+                <li class="list-group-item">
                     {% if book.id %}
-                        <a href="{% url 'app1:book_details' book_id=book.id %}">{{ book.bname }}</a>
+                        <a href="{% url 'app1:book_details' book_id=book.id %}" class="btn btn-info">{{ book.bname }}</a>
                         <form method="post" action="{% url 'app1:details' username=user.username %}">
                             {% csrf_token %}
                             <input type="hidden" name="book" value="{{ book.id }}">
-                            <button type="submit">Add Book</button>
+                            <button type="submit" class="btn btn-success">Add Book</button>
                         </form>
                     {% else %}
-                        No Book ID Available
+                        <span class="text-danger">No Book ID Available</span>
                     {% endif %}
                 </li>
             {% endfor %}
         </ul>
 
-        <h2>User's Books</h2>
-        <ul>
+        <h2 class="mt-4">User's Books</h2>
+        <ul class="list-group">
             {% for b in customer.books.all %}
-           
-                <li>- {{ b.bname }}</li>
-           
+                <li class="list-group-item">- {{ b.bname }}</li>
             {% endfor %}
         </ul>
 
-        <a href="{% url 'app1:add_book' %}" class="button">Add Book</a>
-        <a href="{% url 'app1:logout' %}" class="button">Logout</a>
+        <a href="{% url 'app1:books' %}" class="btn btn-info mt-3">Books</a>
+        <a href="{% url 'app1:add_book' %}" class="btn btn-success mt-3">Add Book</a>
+        <a href="{% url 'app1:logout' %}" class="btn btn-danger mt-3">Logout</a>
     </section>
+</div>
 {% endblock %}

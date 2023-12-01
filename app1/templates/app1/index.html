@@ -7,7 +7,7 @@
 
     <ul>
         {% for user in user_list %}
-            <li> <a href = {% url 'app1:details' user.username %} >customer {{user.username}} </a> - {{user.email}}</li>
+            <li> <a href = "{% url 'app1:details' user.username %}" >customer {{user.username}} </a> - {{user.email}}</li>
         {% endfor %}
     </ul>  
 

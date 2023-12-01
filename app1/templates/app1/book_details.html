@@ -2,25 +2,25 @@
 
 {% block body %}
 
+<div class="container mt-5">
+    <h2>{{ book.bname }}</h2>
+    <ul class="list-group">
+        <li class="list-group-item">Book Name: {{ book.bname }}</li>
+        <li class="list-group-item">Author: {{ book.author }}</li>
+        <li class="list-group-item">Pages: {{ book.pages }}</li>
+        <li class="list-group-item">Language: {{ book.language }}</li>
+    </ul>
+    <form method="post" action="{% url 'app1:details' username=user.username %}">
+        {% csrf_token %}
+        <input type="hidden" name="book" value="{{ book.id }}">
+        <button type="submit" class="btn btn-primary mt-3">Add this Book</button>
+    </form>
+    <br>
+    <br>
+    <a href="{% url 'app1:details' username=request.user.username %}" class="btn btn-secondary">Your Info</a>
+    <a href="{% url 'app1:add_book' %}" class="btn btn-success">Add Book</a>
+    <a href="{% url 'app1:books' %}" class="btn btn-info">Books</a>
+    <a href="{% url 'app1:logout' %}" class="btn btn-danger">Logout</a>
+</div>
 
-<ul>
-    <li>book name: {{ book.bname }}</li>
-    <li>Author: {{ book.author }}</li>
-    <li>Pages : {{ book.pages }} </li>
-    <li>Language : {{ book.language }} </li>
-</ul>
-{{ book.bname }}
-<form method="post" action="{% url 'app1:details' username=user.username %}">
-    {% csrf_token %}
-    <input type="hidden" name="book" value="{{ book.id }}">
-    <button type="submit">Add this Book</button>
-<br>
-<br>
-<a href="{% url 'app1:details' username=request.user.username %}">your info</a>
-
-<a href="{% url 'app1:add_book' %}" class="button">Add Book</a>
-
-<a href="{% url 'app1:books' %}" class="button">Books </a>
-
-<a href="{% url 'app1:logout' %}" class="button">Logout</a>
 {% endblock %}

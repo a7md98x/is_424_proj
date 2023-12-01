@@ -1,40 +1,39 @@
 {% extends "app1/layout.html" %}
 
-
-
 {% block body %}
 
-<h2>Available Books</h2>
-<table>
-    <thead>
-        <tr>
-            <th>Book Name</th>
-            <th>Author</th>
-            <th>Pages</th>
-            <th>Language</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for book in book_list %}
+<div class="container mt-5">
+    <h2 class="mb-4">Available Books</h2>
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>{{ book.bname }}</td>
-                <td>{{ book.author }}</td>
-                <td>{{ book.pages }}</td>
-                <td>{{ book.language }}</td>
+                <th>Book Name</th>
+                <th>Author</th>
+                <th>Pages</th>
+                <th>Language</th>
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for book in book_list %}
+                <tr>
+                    <td>{{ book.bname }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.pages }}</td>
+                    <td>{{ book.language }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <h2>Add Book</h2>
+    <h2 class="mt-5">Add Book</h2>
     <form method="post" action="{% url 'app1:add_book' %}">
         {% csrf_token %}
         {{ book_form }}
-        <button type="submit">Add Book</button>
+        <button type="submit" class="btn btn-primary">Add Book</button>
     </form>
-    <a href="{% url 'app1:books' %}" class="button">Books </a>
+    <a href="{% url 'app1:books' %}" class="btn btn-secondary">Books</a>
     
-    <a href="{% url 'app1:logout' %}" class="button">Logout</a>
-
+    <a href="{% url 'app1:logout' %}" class="btn btn-danger">Logout</a>
+</div>
 
 {% endblock %}
