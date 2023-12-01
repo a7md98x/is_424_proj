@@ -2,15 +2,14 @@
 
 {% block body %}
     {% if message %}
-        <div>{{ message }}</div>
+        <div class="alert alert-danger">{{ message }}</div>
     {% endif %}
-
+    <h2>Login</h2>
     <form action="{% url 'app1:login' %}" method="post">
         {% csrf_token %}
-        <input type="text", name="username", placeholder="Username">
-        <input type="password", name="password", placeholder="Password">
-        <input type="submit", value="Login">
+        <input type="text" name="username" placeholder="Username" class="form-control mb-2">
+        <input type="password" name="password" placeholder="Password" class="form-control mb-2">
+        <button type="submit" class="btn btn-primary">Login</button>
     </form>
-    <a href="{% url 'app1:register' %}" class="button">register</a>
-
+    <a href="{% url 'app1:register' %}" class="btn btn-secondary">Register</a>
 {% endblock %}

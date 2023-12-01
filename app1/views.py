@@ -195,3 +195,4 @@ def update_book(request, book_id):
         form = BookUpdateForm(instance=Book)
 
     return render(request, 'app1/update_book.html', {'form': form, 'book': Book})
+

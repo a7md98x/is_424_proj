@@ -1,36 +1,23 @@
 {% extends "app1/layout.html" %}
 
 {% block body %}
+<div class="container mt-5">
+    <h2>Register</h2>
 
-  <h2>Register</h2>
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
 
+    <form action="{% url 'app1:register' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="first_name" placeholder="First Name" class="form-control mb-2">
+        <input type="text" name="last_name" placeholder="Last Name" class="form-control mb-2">
+        <input type="text" name="username" placeholder="Username" class="form-control mb-2" required>
+        <input type="password" name="password" placeholder="Password" class="form-control mb-2" required>
+        <input type="email" name="email" placeholder="Email" class="form-control mb-2" required>
+        <button type="submit" class="btn btn-success">Register</button>
+    </form>
 
-  {% if message %}
-    <div>{{ message }}</div>
-  {% endif %}
-
-  <form action="{% url 'app1:register' %}" method="post">
-    {% csrf_token %}
-    <input type="text" name="first_name" placeholder="First Name" >
-    <input type="text" name="last_name" placeholder="Last Name" >
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="submit", value="register">
-  </form>
-
-
-
-
-
-  {% comment %} <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-
-    <button type="submit">Register</button>
-  </form> {% endcomment %}
-
-  <a href="{% url 'app1:login' %}" class="button">login</a>
-
+    <a href="{% url 'app1:login' %}" class="btn btn-primary mt-2">Login</a>
+</div>
 {% endblock %}
-
