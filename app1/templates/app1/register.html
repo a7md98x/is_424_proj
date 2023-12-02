@@ -4,9 +4,22 @@
 <div class="container mt-5">
     <h2>Register</h2>
 
-    {% if message %}
-        <div class="alert alert-danger">{{ message }}</div>
-    {% endif %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+
+
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          
+          <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+
+        </div>
+
+            
+        {% endfor %}
+    </ul>
+  {% endif %}
+
 
     <form action="{% url 'app1:register' %}" method="post">
         {% csrf_token %}

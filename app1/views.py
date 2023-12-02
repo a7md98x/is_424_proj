@@ -9,6 +9,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import Http404
+from django.db import IntegrityError
+
 
 
 
@@ -55,7 +57,22 @@ def register1(request):
             last_name = request.POST.get("last_name")
             email = request.POST.get("email")
 
-            user = User.objects.create_user(username, email, password)
+        
+        
+            # user = User.objects.create_user(username, email, password)
+            
+            try:
+            # Attempt to create a new user
+                user = User.objects.create_user(username, email, password)
+
+
+            except IntegrityError:
+                # Catch the IntegrityError for duplicate username
+                messages.error(request, 'Username is already taken. Please choose a different one.')
+                return render(request, 'app1/register.html')
+                
+                
+            
             user.first_name = first_name
             user.last_name = last_name
             user.save()
@@ -66,7 +83,14 @@ def register1(request):
                 email=email,
                 user=user
             )
-            return render(request, "app1/login.html")
+                       
+            if request.user.is_authenticated:  # Check if the user is authenticated
+             
+                books_url = reverse('app1:details', kwargs={'username': request.user.username})
+            else:
+               
+                books_url = reverse('app1:login')
+            return render(request, "app1/login.html",{'books_url': books_url})
    
 
     return render(request, "app1/register.html")
@@ -85,7 +109,7 @@ def customer(request):
     })
 
 
-@login_required 
+
 def add_customer(request):
     if request.method == 'POST':
         customer_form = CustomerForm(request.POST)
@@ -153,32 +177,37 @@ def book_details(request, book_id):
 
 #     return render(request, "app1/register.html", {'form': form})
 
-
-
+@login_required()
 def details(request, username):
-    user = User.objects.get(username=username)
-    customer = get_object_or_404(customers, user=user)
- 
+    if not request.user.is_authenticated or not request.user.username:
+        messages.warning(request, "User not found. Please register.")
+        return redirect('app1:register')
+
+    try:
+        user = User.objects.get(username=username)
+    except User.DoesNotExist:
+        messages.warning(request, "User not found. Please register.")
+        return redirect('app1:register')
+
+    try:
+        customer = customers.objects.get(user=user)
+    except customers.DoesNotExist:
+        messages.warning(request, "Customer not found. Please register.")
+        return redirect('app1:register')
+
     customer_list = customers.objects.all()
     user_list = User.objects.all()
 
     available_books = book.objects.exclude(customers=customer)
 
-  
     if request.method == 'POST':
         book_id = request.POST.get('book')
-
         if book_id:
-            
-                book_to_add = book.objects.get(pk=book_id)
-                customer.books.add(book_to_add)
-                return redirect('app1:details', username=username)
+            book_to_add = book.objects.get(pk=book_id)
+            customer.books.add(book_to_add)
+            return redirect('app1:details', username=username)
 
-           
-
-    return render(request, 'app1/details.html', {'customer': customer, 'customer_list': user_list, 'available_books': available_books,"user":user,'book':None})
-
-
+    return render(request, 'app1/details.html', {'customer': customer, 'customer_list': user_list, 'available_books': available_books, "user": user, 'book': None})
 
 def update_book(request, book_id):
     print(f"book_id: {book_id}")

@@ -1,39 +1,92 @@
 {% extends "app1/layout.html" %}
 
 {% block body %}
-
-<div class="container mt-5">
-    <h2 class="mb-4">Available Books</h2>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Book Name</th>
-                <th>Author</th>
-                <th>Pages</th>
-                <th>Language</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for book in book_list %}
+    <div class="container mt-5">
+        <h2 class="mb-4">Available Books</h2>
+        <table class="table table-striped">
+            <thead class="thead-dark thead-custom">
                 <tr>
-                    <td>{{ book.bname }}</td>
-                    <td>{{ book.author }}</td>
-                    <td>{{ book.pages }}</td>
-                    <td>{{ book.language }}</td>
+                    <th>Name</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Pages</th>
+                    <th>Average Rating</th>
+                    <th>Language</th>
+                    <th>Edition</th>
+                    <th>ISBN</th>
+                    <th>Price</th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for book in book_list %}
+                    <tr>
+                        <td class="text-center"><strong>{{ book.bname }}</strong></td>
+                        <td class="text-center">{{ book.author }}</td>
+                        <td class="text-center">{{ book.genre }}</td>
+                        <td class="text-center">{{ book.pages }}</td>
+                        <td class="text-center">{{ book.average_rating }}</td>
+                        <td class="text-center">{{ book.language }}</td>
+                        <td class="text-center">{{ book.edition }}</td>
+                        <td class="text-center">{{ book.ISBN }}</td>
+                        <td class="text-center">{{ book.price }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
 
-    <h2 class="mt-5">Add Book</h2>
-    <form method="post" action="{% url 'app1:add_book' %}">
-        {% csrf_token %}
-        {{ book_form }}
-        <button type="submit" class="btn btn-primary">Add Book</button>
-    </form>
-    <a href="{% url 'app1:books' %}" class="btn btn-secondary">Books</a>
-    
-    <a href="{% url 'app1:logout' %}" class="btn btn-danger">Logout</a>
-</div>
+        <h2 class="mt-5">Add Book</h2>
+        <form method="post" action="{% url 'app1:add_book' %}" class="mb-5">
+            {% csrf_token %}
 
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ book_form.bname.label_tag }}
+                        {{ book_form.bname }}
+                    </div>
+                    <div class="form-group">
+                        {{ book_form.author.label_tag }}
+                        {{ book_form.author }}
+                    </div>
+                    <div class="form-group">
+                        {{ book_form.genre.label_tag }}
+                        {{ book_form.genre }}
+                    </div>
+                    <div class="form-group">
+                        {{ book_form.pages.label_tag }}
+                        {{ book_form.pages }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {{ book_form.average_rating.label_tag }}
+                        {{ book_form.average_rating }}
+                    </div>
+                    <div class="form-group">
+                        {{ book_form.language.label_tag }}
+                        {{ book_form.language }}
+                    </div>
+                    <div class="form-group">
+                        {{ book_form.edition.label_tag }}
+                        {{ book_form.edition }}
+                    </div>
+                    <div class="form-group">
+                        {{ book_form.ISBN.label_tag }}
+                        {{ book_form.ISBN }}
+                    </div>
+                    <div class="form-group">
+                        {{ book_form.price.label_tag }}
+                        {{ book_form.price }}
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Book</button>
+        </form>
+
+        <div class="mb-3">
+            <a href="{% url 'app1:books' %}" class="btn btn-secondary">Books</a>
+            <a href="{% url 'app1:logout' %}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
 {% endblock %}

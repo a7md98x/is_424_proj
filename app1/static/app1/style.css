@@ -1,13 +1,25 @@
-{% extends "myapp1/layout.html" %}
 
+.navbar-brand img {
+    margin-right: 10px; /* Adjust as needed */
+}
 
-{% block body %}
- 
+.navbar-dark .navbar-toggler-icon {
+    border-color: white; /* Adjust as needed */
+}
 
+.navbar-dark .navbar-toggler:focus,
+.navbar-dark .navbar-toggler-icon:focus {
+    outline: none;
+}
 
-    hello
-          
-   
+.navbar-nav .nav-link {
+    color: white; /* Adjust as needed */
+}
 
+.navbar-nav .nav-link:hover {
+    color: #007bff; /* Adjust as needed */
+}
+.thead-custom th {
+    font-size: 25px; 
+}
 
-{% endblock %}

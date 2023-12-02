@@ -3,11 +3,13 @@
 {% block body %}
 <div class="container mt-5">
     <h2>Available Books</h2>
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
             <tr>
-                <th>Book Name</th>
-                <th>Update</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Language</th>
+                <th scope="col">Update</th>
             </tr>
         </thead>
         <tbody>
@@ -16,6 +18,9 @@
                 <td>
                     <a href="{% url 'app1:book_details' book.id %}">{{ book.bname }}</a>
                 </td>
+                <td>{{ book.genre }}</td>
+                <td>{{ book.language }}</td>
+             
                 <td>
                     <a href="{% url 'app1:update_book' book.id %}" class="btn btn-warning">Update Book Info</a>
                 </td>
@@ -23,8 +28,5 @@
             {% endfor %}
         </tbody>
     </table>
-
-    <a href="{% url 'app1:logout' %}" class="btn btn-danger">Logout</a>
-    <a href="{% url 'app1:add_book' %}" class="btn btn-success">Add Book</a>
 </div>
 {% endblock %}
