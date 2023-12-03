@@ -1,17 +1,17 @@
 {% extends "app1/no_nav_layout.html" %}
 
-
-
 {% block body %}
     {% if message %}
         <div class="alert alert-danger">{{ message }}</div>
     {% endif %}
     <h2>Login</h2>
-    <form action="{% url 'app1:login' %}" method="post">
+    <form action="{% url 'app1:login' %}" method="post" class="mb-3">
         {% csrf_token %}
         <input type="text" name="username" placeholder="Username" class="form-control mb-2">
         <input type="password" name="password" placeholder="Password" class="form-control mb-2">
-        <button type="submit" class="btn btn-primary">Login</button>
+        <div class="d-flex ">
+            <button type="submit" class="btn btn-primary">Login</button>
+            <a href="{% url 'app1:register' %}" class="btn btn-secondary">Register</a>
+        </div>
     </form>
-    <a href="{% url 'app1:register' %}" class="btn btn-secondary">Register</a>
 {% endblock %}

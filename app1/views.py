@@ -17,17 +17,8 @@ from django.db import IntegrityError
 
 
 
-# Create your views here.
-def index (request):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-    customer_form = CustomerForm()
 
-    customer_list = customers.objects.all()
-    user_list = User.objects.all()
-    return render(request,"app1/index.html",{
-        "customers_list": customer_list,"customer_form" :customer_form,"user_list" :user_list
-    })
+
 
 def login(request):
     if request.method == 'POST':  
@@ -192,7 +183,7 @@ def details(request, username):
     try:
         customer = customers.objects.get(user=user)
     except customers.DoesNotExist:
-        messages.warning(request, "Customer not found. Please register.")
+        messages.warning(request, "you are not registered as a Customer.Please register.")
         return redirect('app1:register')
 
     customer_list = customers.objects.all()
