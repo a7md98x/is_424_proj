@@ -8,15 +8,7 @@ from django.contrib.auth import authenticate, login as auth_login,logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import Http404
 from django.db import IntegrityError
-
-
-
-
-
-
-
 
 
 
@@ -52,12 +44,10 @@ def register1(request):
             # user = User.objects.create_user(username, email, password)
             
             try:
-            # Attempt to create a new user
                 user = User.objects.create_user(username, email, password)
 
 
             except IntegrityError:
-                # Catch the IntegrityError for duplicate username
                 messages.error(request, 'Username is already taken. Please choose a different one.')
                 return render(request, 'app1/register.html')
                 
@@ -146,25 +136,9 @@ def add_books(request):
 
 def book_details(request, book_id):
     book_obj = get_object_or_404(book, pk=book_id)
-    # available_books = book.objects.exclude(customers=customer)
 
     return render(request, 'app1/book_details.html', {'book':book_obj})
       
-          
-            
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-        
-#         if form.is_valid():
-#             form.save()
-            
-#             # Redirect to a success page or login page
-#             return HttpResponseRedirect(reverse("app1:register"))
-#     else:
-#         form = UserCreationForm()
-
-#     return render(request, "app1/register.html", {'form': form})
 
 @login_required()
 def details(request, username):

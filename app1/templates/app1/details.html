@@ -29,7 +29,6 @@
                                 <form method="post" action="{% url 'app1:details' username=user.username %}">
                                     {% csrf_token %}
                                     <input type="hidden" name="book" value="{{ book.id }}">
-                                    <!-- Add any additional form elements or buttons if needed -->
                                 </form>
                             {% else %}
                                 <span class="text-danger">No Book ID Available</span>
