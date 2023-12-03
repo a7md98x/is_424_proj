@@ -30,7 +30,6 @@ def login(request):
             user = authenticate(request, username=username, password=password)
 
             if user:
-                print("fffff")
                 auth_login(request, user)
                 return HttpResponseRedirect(reverse("app1:books"))
             else:
@@ -144,7 +143,6 @@ def add_books(request):
         book_form =  BookForm() 
     book_list = book.objects.all()
     return render(request, 'app1/add_book.html', {'book_list': book_list, 'book_form': book_form})
-      
 
 def book_details(request, book_id):
     book_obj = get_object_or_404(book, pk=book_id)

@@ -35,58 +35,80 @@
         </table>
 
         <h2 class="mt-5">Add Book</h2>
-        <form method="post" action="{% url 'app1:add_book' %}" class="mb-5">
-            {% csrf_token %}
 
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        {{ book_form.bname.label_tag }}
-                        {{ book_form.bname }}
+    
+       
+              
+    
+    
+                
+   
+            <form method="post" action="{% url 'app1:add_book' %}" class="mb-5">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ book_form.bname.label_tag }}
+                            {{ book_form.bname }}
+                            {{ book_form.bname.errors}}
+
+                        </div>
+                        <div class="form-group">
+                            {{ book_form.author.label_tag }}
+                            {{ book_form.author }}
+                            {{ book_form.author.errors}}
+
+                        </div>
+                        <div class="form-group">
+                            {{ book_form.genre.label_tag }}
+                            {{ book_form.genre }}
+                            {{ book_form.genre.errors}}
+
+                        </div>
+                        <div class="form-group">
+                            {{ book_form.pages.label_tag }}
+                            {{ book_form.pages }}
+                            {{ book_form.pages.errors}}
+                        </div>
                     </div>
-                    <div class="form-group">
-                        {{ book_form.author.label_tag }}
-                        {{ book_form.author }}
-                    </div>
-                    <div class="form-group">
-                        {{ book_form.genre.label_tag }}
-                        {{ book_form.genre }}
-                    </div>
-                    <div class="form-group">
-                        {{ book_form.pages.label_tag }}
-                        {{ book_form.pages }}
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ book_form.average_rating.label_tag }}
+                            {{ book_form.average_rating }}
+                            {{ book_form.average_rating.errors}}
+
+                        </div>
+                        <div class="form-group">
+                            {{ book_form.language.label_tag }}
+                            {{ book_form.language }}
+                            {{ book_form.language.errors}}
+
+                        </div>
+                        <div class="form-group">
+                            {{ book_form.edition.label_tag }}
+                            {{ book_form.edition }}
+                            {{ book_form.edition.errors}}
+
+                        </div>
+                        <div class="form-group">
+                            {{ book_form.ISBN.label_tag }}
+                            {{ book_form.ISBN }}
+                            {{ book_form.pages.errors}}
+
+                        </div>
+                        <div class="form-group">
+                            {{ book_form.price.label_tag }}
+                            {{ book_form.price }}
+                            {{ book_form.price.errors}}
+
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        {{ book_form.average_rating.label_tag }}
-                        {{ book_form.average_rating }}
-                    </div>
-                    <div class="form-group">
-                        {{ book_form.language.label_tag }}
-                        {{ book_form.language }}
-                    </div>
-                    <div class="form-group">
-                        {{ book_form.edition.label_tag }}
-                        {{ book_form.edition }}
-                    </div>
-                    <div class="form-group">
-                        {{ book_form.ISBN.label_tag }}
-                        {{ book_form.ISBN }}
-                    </div>
-                    <div class="form-group">
-                        {{ book_form.price.label_tag }}
-                        {{ book_form.price }}
-                    </div>
-                </div>
-            </div>
 
-            <button type="submit" class="btn btn-primary">Add Book</button>
+                <button type="submit" class="btn btn-primary">Add Book</button>
         </form>
 
-        <div class="mb-3">
-            <a href="{% url 'app1:books' %}" class="btn btn-secondary">Books</a>
-            <a href="{% url 'app1:logout' %}" class="btn btn-danger">Logout</a>
-        </div>
+
     </div>
 {% endblock %}
