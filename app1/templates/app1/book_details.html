@@ -46,8 +46,17 @@
                     </tr>
                 </tbody>
             </table>
+            <form method="post" action="{% url 'app1:details' username=user.username %}">
+                {% csrf_token %}
+                <input type="hidden" name="book" value="{{ book.id }}">
+                <button type="button" class="btn btn-primary btn-lg">Add This Book</button>
+
+            </form>
+
+              </svg>
         </div>
     </div>
 </div>
+
 
 {% endblock %}

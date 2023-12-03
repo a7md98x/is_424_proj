@@ -22,4 +22,9 @@
 .thead-custom th {
     font-size: 25px; 
 }
-
+.navbar-nav .nav-link {
+    font-size: 30px; /* Adjust the font size as needed */
+}
+.larger-font {
+    font-size: 18px; /* Larger font size for specific items */
+}

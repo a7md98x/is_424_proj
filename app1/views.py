@@ -209,6 +209,7 @@ def details(request, username):
 
     return render(request, 'app1/details.html', {'customer': customer, 'customer_list': user_list, 'available_books': available_books, "user": user, 'book': None})
 
+
 def update_book(request, book_id):
     print(f"book_id: {book_id}")
     Book = get_object_or_404(book, pk=book_id)
